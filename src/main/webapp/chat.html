@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        
+        <title>Chat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel = "stylesheet" href="libs/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+        <link rel = "stylesheet" href="/libs/css/emojionearea.css">
+        <link rel = "stylesheet" href="/libs/css/emojione.min-4.0.0.css">
+
+        <link rel = "stylesheet" href="resources/scss/style.css">
+
+
+        <link rel="stylesheet" type="text/css" href="libs/css/imgareaselect-default.css" />
+
+        <script src="libs/js/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="libs/js/bootstrap.bundle.min.js"/></script>
+    <script src="libs/js/emojione.js"/></script>
+<script src="libs/js/emojionearea.js"/></script>
+
+<script type="text/javascript" src="libs/js/jquery.imgareaselect.js"></script>  
+<script src="resources/main.js"></script>
+<script src="resources/userController.js"></script>
+<script src="resources/msg.js"></script>
+
+<script src="resources/file.js"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg  sticky-top" style="background: #6290B0;">
+        <a class="navbar-brand" href="">
+            <i class="far fa-comment-alt"></i>        
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport" aria-controls="navbarSupport" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupport">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="" class="btn nav-link"> Home </a>
+                </li>
+                <li class="nav-item ">
+                    <div class="dropdown open">
+                        <a href="" class="btn nav-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Chat </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" data-toggle="modal" href="" data-target="#addSingleUserChat">Add user</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="" data-toggle="modal"  data-target="#addGroupUserChat">Add group-chat</a>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <ul class="navbar-nav my-2 my-lg-0" id="navbar">
+
+            </ul>
+    </nav>
+
+    <div class="modal fade" id="signUP" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signUPTittle">Please, enter your info!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"> 
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id = "registration">
+                        <div class="form-group">
+                            <label for="username"> Name </label>   
+                            <input class="form-control" type="text" id="username" value="" placeholder="Name" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"> E-mail </label>   
+                            <input class="form-control" type="email" id="email" value="" placeholder="E-mail" required="required"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"> Password </label>   
+                            <input class="form-control" type="password" id="password" value="" placeholder="Password" required="required"/>
+                        </div>
+
+
+                        <!--<div class="modal-footer">-->
+                        <button class="btn btn-secondary" data-dismiss="modal"> Close</button>
+                        <button class="btn btn-success" type="submit" data-dismiss="modal" onclick="reqRegister()"> Sign Up</button>
+                        <!--</div>-->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addSingleUserChat" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signUPTittle">Please, enter your info!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"> 
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id = "addSingleChat">
+                        <div class="form-group">
+                            <label for="usernameA"> Name </label>   
+                            <input type="text" id="nameUserToAdd"  class="form-control" placeholder="Username"/>
+
+                        </div>
+
+                        <!--<div class="modal-footer">-->
+                        <button class="btn btn-secondary" data-dismiss="modal"> Close</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="addToChat()">Send</button>
+                        <!--</div>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addGroupUserChat" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">Добавить групповой чат</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"> 
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id = "addGroupChat">
+                        <div class="form-group">
+                            <label > Name </label>   
+                            <input type="text" class="form-control" id="nameGroup" placeholder="Имя пользователя"/>
+                            <button type="button" class="btn btn-secondary margin-t" onclick="addNameToList()">Добавить</button>
+                            <div id="usersToAddToGroupChat">
+
+                            </div>
+                        </div>
+
+                        <!--<div class="modal-footer">-->
+                        <button class="btn btn-secondary" data-dismiss="modal"> Закрыть</button>
+                        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="createGroupChat()">Создать</button>
+                        <!--</div>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="signIN" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signUPTittle">Please, enter your info!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"> 
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id = "autorization">
+                        <div class="form-group">
+                            <label for="usernameA"> Name </label>   
+                            <input class="form-control" type="textarea" id="usernameA" value="" placeholder="Name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordA"> Password </label>   
+                            <input class="form-control" type="password" id="passwordA" value="" placeholder="Password" required />
+                        </div>
+
+
+                        <!--<div class="modal-footer">-->
+                        <button class="btn btn-secondary" data-dismiss="modal"> Close</button>
+                        <button class="btn btn-success" type="submit" data-dismiss="modal" onclick="login()"> Sign In</button>
+                        <!--</div>-->
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade text-align-left" id="changePictureModal" tabindex="-1" role="dialog" aria-labelledby="Change picture">
+        <div class="modal-dialog" role="document" style="width: 600px;">
+            <div class="modal-content" style="width: 600px;">
+                <div class="modal-header">
+
+                    <h4 class="">Выберите фотографию вашего профиля</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="file" onchange="avatarPicked()" accept="image/*"/>
+                    <label id="labelSelectArea" hidden="false" class="margin-t" >Выберите область фотографии вашего профиля</label> 
+                    <br/>
+                    <img id="imgToLoad" hidden="true"/>
+                </div>
+                <div class="modal-footer" id="divButtonSaveAvatar" hidden="true">
+
+                    <button type="button" class="btn btn-primary form-control"
+                            onclick="saveAvatarOnServer()" data-toggle="modal" data-target="#changePictureModal">
+                        Сохранить фотографию
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade text-align-left" id="pickFileModal" tabindex="-1" role="dialog" aria-labelledby="Change picture">
+        <div class="modal-dialog" role="document" style="width: 600px;">
+            <div class="modal-content" style="width: 600px;">
+                <div class="modal-header">
+
+                    <h4 class="">Выберите файл</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                </div>
+                <div class="modal-body">
+                    <input type="file" id="fileMessage" onchange="filePicked()" accept="image/*"/>
+                    <br/> 
+                </div>
+                <div class="modal-footer" id="divButtonSend" hidden="true">
+
+                    <button type="button" id="sendFiles" class="btn btn-primary form-control"
+                            data-toggle="modal" >
+                        Отправить файл
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade text-align-left" id="listUserChat" tabindex="-1" role="dialog" aria-labelledby="Change picture">
+        <div class="modal-dialog" role="document" style="width: 600px;">
+            <div class="modal-content" style="width: 600px;">
+                <div class="modal-header">
+
+                    <h4 class="">Список пользователей чата</h4>
+                </div>
+                <div class="modal-body" id="listUser">
+                   
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-dismiss="modal"> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <div class="modal fade text-align-left" id="moderPanel" tabindex="-1" role="dialog" aria-labelledby="Change picture">
+        <div class="modal-dialog" role="document" >
+            <div class="modal-content" >
+                <div class="modal-header">
+                    <h4 class="">Панель модерации</h4>
+                </div>
+                <div class="modal-body" id="moder">
+                   
+                </div>
+                <div class="modal-footer">
+
+                    <button class="btn btn-secondary" data-dismiss="modal"> Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="margin-t" id = "chat-block">
+        <div class="addGroupChat">
+
+        </div>
+        <div class="container">
+            <div class="row">
+                <div  class=" col-md-4  profileArea margin-right">
+                    <ul class="blok-chatd listUl" id="listRoomPage">
+
+                    </ul>
+                </div>
+                <div class="profileArea col-md-7">
+                    <div class="listparent">
+                        <div id="chatMessages" class="blok-chatd roww">
+                            <ul id="listMessage" class=" display-block listUl">
+                                <div class="imgb" style="text-align: center;"><img src="/res/default/back.jpg"/><br/> Выберите чат:</div>
+                            </ul>
+                            <div id="post" class="listchild container">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(document).ready(function () {
+        initAvatarUpload();
+        initHeader();
+        resetChatList();
+    });
+    $("#sendFiles").on('click', function () {
+        sendFileWrap(currentRoom);
+    });
+</script>
+</html>
