@@ -6,10 +6,6 @@
         <param-value>Development</param-value>
         
     </context-param>
-    <context-param>
-        <param-name>FILE_PREFIX</param-name>
-        <param-value>/home/danil/projects/resources/</param-value>
-    </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -19,6 +15,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
+    
+     
+    
     <session-config>
         <session-timeout>
             30
@@ -27,5 +26,7 @@
     <welcome-file-list>
         <welcome-file>faces/chat.html</welcome-file>
     </welcome-file-list>
+    
+    
     
 </web-app>

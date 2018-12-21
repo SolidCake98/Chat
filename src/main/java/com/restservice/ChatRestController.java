@@ -8,12 +8,14 @@ package com.restservice;
 import com.facade.ChatFacade;
 import com.facade.MessageUFacade;
 import com.facade.UserChatFacade;
+import com.facade.UserChatStatusFacade;
 import com.facade.UserFacade;
 import com.models.Chat;
 import com.models.GroupChatAddRQ;
 import com.models.MessageRestModel;
 import com.models.MessageU;
 import com.models.UserChat;
+import com.models.UserChatStatus;
 import com.models.Users;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +61,9 @@ public class ChatRestController {
 
     @Inject
     private UserRestController userController;
+    
+    @Inject
+    private UserChatStatusFacade chatStatusFacade;
 
     /**
      * Добавляет чат в бд
@@ -278,8 +283,8 @@ public class ChatRestController {
                     } else {
                         Chat newChat = createChatByName(addUser.getName().concat(", " + curUser.getName()));
                         createMessage("User " + curUser.getName() + " created a chat " + newChat.getName(), newChat, curUser);
-                        createUserChat(curUser, newChat);
-                        createUserChat(addUser, newChat);
+                        createUserChat(curUser, newChat, chatStatusFacade.find(1));
+                        createUserChat(addUser, newChat, chatStatusFacade.find(2));
                     }
                 }
             }
@@ -327,10 +332,11 @@ public class ChatRestController {
      * @param user Пользователь
      *
      */
-    public void createUserChat(Users user, Chat chat) {
+    public void createUserChat(Users user, Chat chat, UserChatStatus status) {
         UserChat userChat = new UserChat();
         userChat.setChat(chat);
         userChat.setUserT(user);
+        userChat.setStatus(status);
         userChatFacade.create(userChat);
     }
 
@@ -460,11 +466,19 @@ public class ChatRestController {
         Chat currentChat = createChatByName(chatName);
         createMessage("User " + curUser.getName() + " created a chat " + currentChat.getName(), currentChat, curUser);
         userList.add(0, curUser);
+        int i = 0;
         for (Users addUser : userList) {
 
-            //userChatFacade.FindUserChatByChatAndUser(chat, addUser);
+            
+            if(i==0){
+                if (userChatFacade.findUserChatByChatAndUserList(currentChat, addUser) == null || userChatFacade.findUserChatByChatAndUserList(currentChat, addUser).isEmpty()) {
+                createUserChat(addUser, currentChat, chatStatusFacade.find(1));
+                i++;
+                continue;
+            }
+            }
             if (userChatFacade.findUserChatByChatAndUserList(currentChat, addUser) == null || userChatFacade.findUserChatByChatAndUserList(currentChat, addUser).isEmpty()) {
-                createUserChat(addUser, currentChat);
+                createUserChat(addUser, currentChat, chatStatusFacade.find(2));
             }
         }
     }
